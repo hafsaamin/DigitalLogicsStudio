@@ -1,6 +1,6 @@
 import React, { Suspense, lazy } from "react";
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useTheme } from "./context/ThemeContext";
 
 // UTILS / OTHER TOOLS:
@@ -222,24 +222,26 @@ function App() {
             <Route path="/gates" element={<GateExplanation />} />
             <Route path="/timing-diagrams" element={<TimeDiagrams />} />
 
-            {/* ── Number Systems ────────────────────────────────── */}
-            <Route path="/bcd-notation" element={<BCDNotation />} />
-            <Route path="/ascii-notation" element={<ASCIINotation />} />
-            <Route path="/bit-extension" element={<BitExtension />} />
-            <Route path="/numberconversation" element={<NumberConverter />} />
-            <Route
-              path="/numbersystemcalculator"
-              element={<NumberSystemCalculator />}
-            />
-            <Route
-              path="/binaryrepresentation"
-              element={<BinaryRepresentation />}
-            />
-            <Route
-              path="/paritybitcalculator"
-              element={<ParityBitCalculator />}
-            />
-            <Route path="/bitconvertor" element={<BitConverter />} />
+            {/* ── Number Systems (/number-systems/* matches nsConfig.js) ── */}
+            <Route path="/number-systems/binary-representation" element={<BinaryRepresentation />} />
+            <Route path="/number-systems/number-conversion" element={<NumberConverter />} />
+            <Route path="/number-systems/bit-extension" element={<BitExtension />} />
+            <Route path="/number-systems/bcd-notation" element={<BCDNotation />} />
+            <Route path="/number-systems/ascii-notation" element={<ASCIINotation />} />
+            <Route path="/number-systems/bit-converter" element={<BitConverter />} />
+            <Route path="/number-systems/calculator" element={<NumberSystemCalculator />} />
+
+            {/* ── Number Systems legacy redirects (old routes → new) ── */}
+            <Route path="/binaryrepresentation" element={<Navigate to="/number-systems/binary-representation" replace />} />
+            <Route path="/numberconversation" element={<Navigate to="/number-systems/number-conversion" replace />} />
+            <Route path="/bit-extension" element={<Navigate to="/number-systems/bit-extension" replace />} />
+            <Route path="/bcd-notation" element={<Navigate to="/number-systems/bcd-notation" replace />} />
+            <Route path="/ascii-notation" element={<Navigate to="/number-systems/ascii-notation" replace />} />
+            <Route path="/bitconvertor" element={<Navigate to="/number-systems/bit-converter" replace />} />
+            <Route path="/numbersystemcalculator" element={<Navigate to="/number-systems/calculator" replace />} />
+
+            {/* ── Parity Bit Calculator (standalone) ── */}
+            <Route path="/paritybitcalculator" element={<ParityBitCalculator />} />
 
             {/* ── K-Map ─────────────────────────────────────────── */}
             <Route path="/kmapgenerator" element={<KMapGenerator />} />
@@ -375,3 +377,4 @@ function App() {
 }
 
 export default App;
+
