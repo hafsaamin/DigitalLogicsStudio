@@ -1,19 +1,41 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import progressService from "../services/progressService";
 
-export default function useLearningProgress({ user, topics = [], problems = [] }) {
+export default function useLearningProgress({
+  user,
+  topics = [],
+  problems = [],
+}) {
   const userKey = useMemo(() => progressService.getUserKey(user), [user]);
-  const catalog = useMemo(() => ({ topics, problems }), [topics, problems]);
+
+  // Stabilize catalog with a deep-equality ref so a new array reference
+  // from the parent (e.g. filtered topics) doesn't trigger effects on every render.
+  const catalogRef = useRef(null);
+  const topicsKey = topics.map((t) => t.id).join(",");
+  const problemsKey = problems.map((p) => p.id ?? p).join(",");
+
+  if (
+    catalogRef.current === null ||
+    catalogRef.current._topicsKey !== topicsKey ||
+    catalogRef.current._problemsKey !== problemsKey
+  ) {
+    catalogRef.current = {
+      topics,
+      problems,
+      _topicsKey: topicsKey,
+      _problemsKey: problemsKey,
+    };
+  }
+
+  const catalog = catalogRef.current;
 
   const [snapshot, setSnapshot] = useState(() =>
     progressService.getSnapshot(userKey, catalog),
   );
 
-  // Track whether we've loaded from DB for this userKey
+  // On mount (or when userKey changes), load the full progress state from MongoDB.
   const loadedFromDBRef = useRef(null);
 
-  // On mount (or when userKey changes), load the full progress state from MongoDB.
-  // This replaces the old localStorage hydration.
   useEffect(() => {
     if (!user || userKey === "guest") return;
     if (loadedFromDBRef.current === userKey) return;
@@ -24,8 +46,7 @@ export default function useLearningProgress({ user, topics = [], problems = [] }
     });
   }, [userKey, user, catalog]);
 
-  // Track which DB-solved arrays we've already synced to avoid infinite loops.
-  // This is a fallback for the legacy solvedProblems array on the user object.
+  // Fallback sync for legacy solvedProblems array on the user object.
   const syncedRef = useRef(null);
 
   useEffect(() => {
@@ -40,9 +61,14 @@ export default function useLearningProgress({ user, topics = [], problems = [] }
     setSnapshot(progressService.getSnapshot(userKey, catalog));
   }, [user?.solvedProblems, userKey, problems, catalog]);
 
-  useEffect(() => {
-    setSnapshot(progressService.getSnapshot(userKey, catalog));
-  }, [catalog, userKey]);
+  // ❌ REMOVED: the useEffect below was the infinite loop culprit.
+  // `catalog` was a new object reference on every render (because `topics`
+  // from Home.jsx's useMemo is recreated each render), so this effect fired
+  // endlessly: setSnapshot → re-render → new catalog → effect fires again.
+  //
+  // useEffect(() => {
+  //   setSnapshot(progressService.getSnapshot(userKey, catalog));
+  // }, [catalog, userKey]);
 
   const refresh = useCallback(() => {
     setSnapshot(progressService.getSnapshot(userKey, catalog));
@@ -55,7 +81,11 @@ export default function useLearningProgress({ user, topics = [], problems = [] }
 
   const recordAttempt = useCallback(
     async (problem) => {
-      const nextSnapshot = await progressService.recordAttempt(userKey, problem, catalog);
+      const nextSnapshot = await progressService.recordAttempt(
+        userKey,
+        problem,
+        catalog,
+      );
       setSnapshot(nextSnapshot);
     },
     [catalog, userKey],
@@ -63,7 +93,12 @@ export default function useLearningProgress({ user, topics = [], problems = [] }
 
   const setProblemSolved = useCallback(
     async (problem, solved) => {
-      const nextSnapshot = await progressService.setProblemSolved(userKey, problem, solved, catalog);
+      const nextSnapshot = await progressService.setProblemSolved(
+        userKey,
+        problem,
+        solved,
+        catalog,
+      );
       setSnapshot(nextSnapshot);
     },
     [catalog, userKey],
@@ -71,7 +106,11 @@ export default function useLearningProgress({ user, topics = [], problems = [] }
 
   const openTopic = useCallback(
     async (topic) => {
-      const nextSnapshot = await progressService.openTopic(userKey, topic, catalog);
+      const nextSnapshot = await progressService.openTopic(
+        userKey,
+        topic,
+        catalog,
+      );
       setSnapshot(nextSnapshot);
     },
     [catalog, userKey],
