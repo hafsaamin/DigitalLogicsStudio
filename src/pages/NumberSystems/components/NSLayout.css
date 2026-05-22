@@ -2249,6 +2249,85 @@
   color: var(--ns-danger);
 }
 
+.ns-layout .ascii-reference-card {
+  margin-top: 1.25rem;
+}
+
+.ns-layout .ascii-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.ns-layout .ascii-filter-btn {
+  min-height: 36px;
+  border: 1px solid var(--ns-border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.025);
+  color: var(--ns-text-muted);
+  cursor: pointer;
+  font-family: var(--ns-font-body);
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 0.45rem 0.8rem;
+  transition:
+    background var(--ns-dur-fast) var(--ns-ease),
+    border-color var(--ns-dur-fast) var(--ns-ease),
+    color var(--ns-dur-fast) var(--ns-ease),
+    transform var(--ns-dur-fast) var(--ns-ease);
+}
+
+.ns-layout .ascii-filter-btn:hover,
+.ns-layout .ascii-filter-btn.is-active {
+  color: var(--ns-text-hi);
+  border-color: var(--ns-teal-border-hi);
+  background: var(--ns-teal-soft);
+  transform: translateY(-1px);
+}
+
+.ns-layout .ascii-table-wrap {
+  width: 100%;
+  max-height: 640px;
+  overflow: auto;
+  border: 1px solid var(--ns-border);
+  border-radius: var(--ns-radius-md);
+  background: var(--ns-surface-0);
+}
+
+.ns-layout .ascii-standard-table {
+  min-width: 720px;
+}
+
+.ns-layout .ascii-standard-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--ns-surface-2);
+}
+
+.ns-layout .ascii-char-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem;
+  min-height: 1.8rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--ns-radius-sm);
+  background: rgba(147, 197, 253, 0.1);
+  border: 1px solid rgba(147, 197, 253, 0.2);
+  color: var(--ns-text-hi);
+  font-family: var(--ns-font-mono);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.ns-layout .ascii-char-pill.is-control {
+  background: rgba(251, 191, 36, 0.11);
+  border-color: rgba(251, 191, 36, 0.22);
+  color: var(--ns-amber);
+}
+
 /* ── Modal polish ──────────────────────────────────────────── */
 .ns-layout .modal-overlay {
   position: fixed;
