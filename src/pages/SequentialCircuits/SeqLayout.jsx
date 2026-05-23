@@ -45,6 +45,16 @@ const seqPages = [
   },
 ];
 
+const PATH_TO_SUBTOPIC_ID = Object.fromEntries(
+  seqPages.map((page) => [page.path, page.path.replace("/sequential/", "")]),
+);
+
+const SEQ_TOPIC = {
+  id: "sequential-circuits",
+  title: "SEQUENTIAL CIRCUITS",
+  links: Object.values(PATH_TO_SUBTOPIC_ID).map((id) => ({ id })),
+};
+
 const SeqLayout = ({ children, title, subtitle }) => (
   <PremiumLearningShell
     title={title}
@@ -56,6 +66,10 @@ const SeqLayout = ({ children, title, subtitle }) => (
     heroKicker="Sequential Circuits"
     progressVerb="complete"
     rootClassName="seq-layout"
+    tracking={{
+      topic: SEQ_TOPIC,
+      pathToSubtopicId: PATH_TO_SUBTOPIC_ID,
+    }}
   >
     {children}
   </PremiumLearningShell>

@@ -24,6 +24,19 @@ const advancedLogicPages = [
   },
 ];
 
+const PATH_TO_SUBTOPIC_ID = {
+  "/circuit-cost": "circuit-cost",
+  "/universal-gates": "universal-gates",
+  "/odd-function": "odd-function",
+  "/gates": "gates",
+};
+
+const ADVANCED_LOGIC_TOPIC = {
+  id: "advanced-logic",
+  title: "ADVANCED LOGIC",
+  links: Object.values(PATH_TO_SUBTOPIC_ID).map((id) => ({ id })),
+};
+
 const AdvancedLogicLayout = ({
   title,
   subtitle,
@@ -42,6 +55,10 @@ const AdvancedLogicLayout = ({
     sidebarCopy="Study optimization, universal construction, parity, and deeper reasoning inside the same premium shell."
     heroKicker="Advanced Logic"
     progressVerb="complete"
+    tracking={{
+      topic: ADVANCED_LOGIC_TOPIC,
+      pathToSubtopicId: PATH_TO_SUBTOPIC_ID,
+    }}
   >
     {children}
   </PremiumLearningShell>

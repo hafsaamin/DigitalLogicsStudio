@@ -3,6 +3,16 @@ import PremiumLearningShell from "../../components/topics/PremiumLearningShell";
 import "./MemorySystem.css";
 import { memoryPages } from "./memoryConfig";
 
+const PATH_TO_SUBTOPIC_ID = Object.fromEntries(
+  memoryPages.map((page) => [page.path, page.path.replace("/memory/", "")]),
+);
+
+const MEMORY_TOPIC = {
+  id: "memory-systems",
+  title: "MEMORY SYSTEMS",
+  links: Object.values(PATH_TO_SUBTOPIC_ID).map((id) => ({ id })),
+};
+
 const MemoryLayout = ({ title, kicker, description, children }) => (
   <PremiumLearningShell
     title={title}
@@ -14,6 +24,10 @@ const MemoryLayout = ({ title, kicker, description, children }) => (
     heroKicker={kicker || "Memory Systems"}
     progressVerb="complete"
     rootClassName="mem-layout"
+    tracking={{
+      topic: MEMORY_TOPIC,
+      pathToSubtopicId: PATH_TO_SUBTOPIC_ID,
+    }}
   >
     {children}
   </PremiumLearningShell>

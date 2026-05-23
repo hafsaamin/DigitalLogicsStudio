@@ -50,6 +50,24 @@ const regPages = [
   },
 ];
 
+const PATH_TO_SUBTOPIC_ID = {
+  "/registers/intro": "registers",
+  "/registers/counters": "counters",
+  "/registers/sync-async": "sync-async",
+  "/registers/shift-registers": "shift-registers",
+  "/registers/serial-shift": "serial-shift",
+  "/registers/loading": "loading",
+  "/registers/parallel": "parallel",
+  "/registers/ripple-counters": "ripple-counters",
+  "/registers/sync-binary-counters": "sync-binary-counters",
+};
+
+const REG_TOPIC = {
+  id: "registers-and-register-transfers",
+  title: "REGISTERS & REGISTER TRANSFERS",
+  links: Object.values(PATH_TO_SUBTOPIC_ID).map((id) => ({ id })),
+};
+
 const RegLayout = ({ children, title, subtitle }) => (
   <PremiumLearningShell
     title={title}
@@ -61,6 +79,10 @@ const RegLayout = ({ children, title, subtitle }) => (
     heroKicker="Registers and Register Transfers"
     progressVerb="complete"
     rootClassName="reg-layout"
+    tracking={{
+      topic: REG_TOPIC,
+      pathToSubtopicId: PATH_TO_SUBTOPIC_ID,
+    }}
   >
     {children}
   </PremiumLearningShell>
