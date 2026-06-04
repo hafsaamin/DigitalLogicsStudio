@@ -446,6 +446,10 @@
 }
 
 @media (max-width: 720px) {
+  .core-topics-section {
+    padding: 0 0.25rem;
+  }
+
   .core-topics-summary {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -470,11 +474,24 @@
     max-width: none;
     text-align: left;
   }
+
+  .core-topic-open-btn {
+    justify-content: center;
+  }
 }
 
 @media (max-width: 560px) {
   .core-topics-summary {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.55rem;
+  }
+
+  .core-topics-summary div {
+    padding: 0.75rem 0.7rem;
+  }
+
+  .core-topics-summary strong {
+    font-size: 1.25rem;
   }
 
   .core-topic-card-metrics {
@@ -484,5 +501,37 @@
   .core-topic-progress-meta {
     flex-direction: column;
     gap: 0.35rem;
+  }
+
+  .core-topic-card {
+    padding: 1rem;
+  }
+
+  /* Pill grid: prevent overflow on small phones */
+  .core-topic-pill-grid {
+    gap: 0.4rem;
+  }
+
+  .core-topic-pill-link {
+    font-size: 0.78rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .core-topics-summary {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.4rem;
+  }
+
+  .core-topics-summary strong {
+    font-size: 1.1rem;
+  }
+
+  .core-topics-summary span {
+    font-size: 0.72rem;
+  }
+
+  .core-topic-card-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

@@ -1054,6 +1054,44 @@
   .afhdl-grid-3-sm {
     grid-template-columns: 1fr;
   }
+  /* Hero highlights: 1 column on small tablets */
+  .afhdl-hero-highlights {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Phone-specific */
+@media (max-width: 560px) {
+  .afhdl-topbar {
+    padding: 0 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .afhdl-category-pill {
+    font-size: 0.78rem;
+    padding: 0.15rem 0.45rem;
+  }
+
+  .afhdl-topbar-link span {
+    display: none;
+  }
+
+  .afhdl-main {
+    padding: 0.85rem 0.75rem 2.5rem;
+  }
+
+  .afhdl-hero {
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+
+  .afhdl-hero-title {
+    font-size: clamp(1.4rem, 7vw, 2rem);
+  }
+
+  .afhdl-hero-subtitle {
+    font-size: 0.95rem;
+  }
 }
 
 /* Very small screens */
@@ -1066,6 +1104,9 @@
   }
   .afhdl-hero {
     padding: 0.9rem;
+  }
+  .afhdl-category-pill {
+    display: none;
   }
 }
 
