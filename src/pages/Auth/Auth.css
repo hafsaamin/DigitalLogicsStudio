@@ -261,7 +261,7 @@
 
 @media (max-width: 640px) {
   .auth-main {
-    width: min(100%, calc(100% - 1rem));
+    width: min(100%, calc(100% - 1.5rem));
     padding: 2.25rem 0 3rem;
   }
 
@@ -270,5 +270,37 @@
   .profile-hero {
     padding: 1.25rem;
     border-radius: 1.2rem;
+  }
+
+  .auth-submit,
+  .auth-secondary-btn {
+    min-height: 48px;
+  }
+
+  .profile-hero h1 {
+    font-size: clamp(1.6rem, 6vw, 2.2rem);
+  }
+}
+
+@media (max-width: 400px) {
+  .auth-main {
+    width: min(100%, calc(100% - 1rem));
+    padding: 1.75rem 0 2.5rem;
+  }
+
+  .auth-card,
+  .profile-card,
+  .profile-hero {
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+
+  .auth-eyebrow {
+    font-size: 0.76rem;
+  }
+
+  .auth-card-header h2,
+  .profile-card h2 {
+    font-size: 1.3rem;
   }
 }

@@ -274,8 +274,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 34px;
-  height: 34px;
+  width: 40px;
+  height: 40px;
   border-radius: 0.45rem;
   background: transparent;
   border: 1px solid var(--border-color);
@@ -284,6 +284,9 @@
   transition:
     background 0.15s ease,
     border-color 0.15s ease;
+  /* Ensure it's always tappable on touch devices */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .home-hamburger:hover {
@@ -1206,4 +1209,252 @@ summary:hover {
 [data-theme="light"] .kmap-truth-table .output-x,
 [data-theme="light"] .kmap-truth-table .output-dontcare {
   color: #d97706 !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   GLOBAL RESPONSIVE ADDITIONS — covers gaps in all pages
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Safe area / viewport meta guard ── */
+* {
+  box-sizing: border-box;
+}
+
+/* ── Navbar: fix 768–860px gap where nav links vanish but no hamburger ── */
+@media (max-width: 860px) {
+  .home-nav {
+    display: none;
+  }
+
+  .home-hamburger {
+    display: flex !important;
+  }
+
+  /* Prevent brand tagline from overflowing at medium widths */
+  .home-brand-text {
+    max-width: calc(100vw - 200px);
+    overflow: hidden;
+  }
+
+  .home-tagline {
+    display: none;
+  }
+}
+
+/* ── Navbar inner: prevent overflow on very small screens ── */
+.home-header-inner {
+  flex-wrap: nowrap;
+  min-width: 0;
+}
+
+@media (max-width: 400px) {
+  .home-header-inner {
+    padding: 0.7rem 0.85rem;
+    gap: 0.75rem;
+  }
+
+  .home-title {
+    font-size: 1rem;
+  }
+
+  .home-logo-container {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* ── Mobile nav: full-width auth buttons ── */
+@media (max-width: 860px) {
+  .home-mobile-auth {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .home-mobile-auth .home-auth-btn,
+  .home-mobile-auth .home-user-badge {
+    width: 100%;
+    justify-content: center;
+    min-height: 44px;
+  }
+}
+
+/* ── Hero: prevent h1 from overflowing on small phones ── */
+@media (max-width: 480px) {
+  .home-hero-content h1 {
+    font-size: clamp(1.6rem, 7vw, 2.4rem) !important;
+    word-break: break-word;
+  }
+
+  .home-hero {
+    padding: 3.5rem 1rem 3rem !important;
+  }
+}
+
+/* ── Ghost logo: hide on very small phones to save space ── */
+@media (max-width: 420px) {
+  .hero-ghost-logo {
+    display: none;
+  }
+}
+
+/* ── Search bar: full-width on mobile ── */
+@media (max-width: 640px) {
+  .search-container {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .home-search-button {
+    width: 100%;
+    min-height: 48px;
+    border-radius: 1rem;
+  }
+
+  .home-search-input {
+    border-radius: 1rem;
+  }
+}
+
+/* ── Home sections: tighter padding on phones ── */
+@media (max-width: 480px) {
+  .home-sections {
+    padding: 1.5rem 0.85rem 3rem !important;
+    gap: 2rem;
+  }
+}
+
+/* ── Home cards: single column + full-width links on phone ── */
+@media (max-width: 480px) {
+  .home-section-grid,
+  .home-featured-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-card {
+    padding: 1.5rem !important;
+  }
+
+  .home-card-links {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Problems CTA banner: stack on small tablets ── */
+@media (max-width: 720px) {
+  .home-problems-cta {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .home-problems-cta-actions {
+    justify-content: flex-start;
+  }
+}
+
+/* ── Footer: full collapse on phones ── */
+@media (max-width: 480px) {
+  .home-footer-inner {
+    grid-template-columns: 1fr;
+    padding: 2rem 1rem 1.5rem;
+    gap: 1.5rem;
+  }
+
+  .home-footer-brand {
+    grid-column: 1;
+  }
+}
+
+/* ── ToolLayout / calculator-container: responsive padding ── */
+.calculator-container {
+  width: 100%;
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  .calculator-container {
+    padding: 0 !important;
+  }
+
+  .header-content {
+    padding: 1.5rem 1rem 1rem;
+  }
+
+  .title {
+    font-size: clamp(1.4rem, 5vw, 2rem) !important;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+  }
+
+  .main-content {
+    padding: 1rem;
+  }
+}
+
+/* ── ProfileDashboard stats: fix at 600-900px range ── */
+@media (max-width: 860px) and (min-width: 641px) {
+  .pd-stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ── ProfileDashboard hero: responsive at mid widths ── */
+@media (max-width: 760px) {
+  .pd-hero {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+
+  .pd-hero-actions {
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .pd-hero-actions .pd-btn {
+    flex: 1;
+  }
+}
+
+/* ── Problems page toolbar: stack on phones ── */
+@media (max-width: 560px) {
+  .problems-toolbar-selects select {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .problems-filter-chip {
+    font-size: 0.82rem;
+    padding: 0.55rem 0.75rem;
+  }
+}
+
+/* ── Prevent horizontal scroll on all pages ── */
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* ── Touch-friendly minimum tap targets ── */
+@media (hover: none) and (pointer: coarse) {
+  .home-nav-link,
+  .home-auth-btn,
+  .home-theme-btn,
+  .home-hamburger,
+  .home-card-link,
+  .pd-btn,
+  .pd-tab,
+  .problems-filter-chip,
+  .problems-sidebar-link,
+  .afhdl-hamburger,
+  .afhdl-theme-btn,
+  .afhdl-nav-item,
+  .core-topic-open-btn,
+  .core-topic-pill-toggle {
+    min-height: 44px;
+    min-width: 44px;
+  }
 }
