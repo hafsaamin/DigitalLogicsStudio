@@ -1447,7 +1447,6 @@ body {
   .home-card-link,
   .pd-btn,
   .pd-tab,
-  .problems-filter-chip,
   .problems-sidebar-link,
   .afhdl-hamburger,
   .afhdl-theme-btn,
@@ -1456,6 +1455,12 @@ body {
   .core-topic-pill-toggle {
     min-height: 44px;
     min-width: 44px;
+  }
+
+  /* Filter chips need tall tap targets but NOT a fixed min-width —
+     that turns short labels (e.g. "Seq") into circles with overflowing text. */
+  .problems-filter-chip {
+    min-height: 44px;
   }
 }
 
