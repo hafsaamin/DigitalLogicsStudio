@@ -319,16 +319,30 @@ const Boolforge = ({
     const resizeCanvas = () => {
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(() => {
-        canvas.width = container.clientWidth;
-        canvas.height = container.clientHeight;
-        drawWires();
+        const w = container.clientWidth;
+        const h = container.clientHeight;
+        if (w > 0 && h > 0) {
+          canvas.width = w;
+          canvas.height = h;
+          drawWires();
+        }
       }, 100);
     };
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
+
+    // ResizeObserver handles layout shifts (e.g. mobile stacking) that
+    // window resize events miss.
+    let ro;
+    if (typeof ResizeObserver !== "undefined") {
+      ro = new ResizeObserver(resizeCanvas);
+      ro.observe(container);
+    }
+
     return () => {
       window.removeEventListener("resize", resizeCanvas);
       clearTimeout(resizeTimeout);
+      if (ro) ro.disconnect();
     };
   }, [drawWires]);
 

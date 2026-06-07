@@ -232,8 +232,9 @@ body:has(.boolforge-page) {
 @media (max-width: 900px) {
   .boolforge-main .container.circuit-maker {
     grid-template-columns: 1fr;
-    grid-template-rows: auto 450px auto;
+    grid-template-rows: auto minmax(420px, 55vh) auto;
     height: auto;
+    min-height: 0;
   }
 
   .boolforge-main .sidebar {
@@ -242,6 +243,7 @@ body:has(.boolforge-page) {
     height: auto;
     max-height: none;
     padding: 16px;
+    overflow-y: visible;
   }
 
   .gate-palette {
@@ -263,7 +265,15 @@ body:has(.boolforge-page) {
   }
 
   .boolforge-main .canvas-container {
-    height: 450px;
+    /* Must have explicit height so canvas gets non-zero clientHeight */
+    height: 55vh;
+    min-height: 420px;
+    width: 100%;
+  }
+
+  .boolforge-main .canvas-container canvas {
+    width: 100% !important;
+    height: 100% !important;
   }
 
   .boolforge-main .truth-table-panel {
@@ -271,6 +281,22 @@ body:has(.boolforge-page) {
     border-top: 2px solid var(--bg-light);
     height: auto;
     padding: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .boolforge-main .container.circuit-maker {
+    grid-template-rows: auto minmax(340px, 50vh) auto;
+  }
+
+  .boolforge-main .canvas-container {
+    min-height: 340px;
+  }
+
+  .gate-btn {
+    flex: 1 1 calc(50% - 6px);
+    font-size: 11px;
+    padding: 7px 8px;
   }
 }
 
