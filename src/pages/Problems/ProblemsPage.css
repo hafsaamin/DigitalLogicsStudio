@@ -1224,6 +1224,9 @@
     /* No backdrop-filter here — it creates a new stacking context that
        causes the FAB toggle button to appear blurred on mobile Safari/Chrome */
     z-index: 999;
+    /* The sidebar sits above this at z-index:1000 — make sure the backdrop
+       only captures clicks/taps in the area outside the sidebar */
+    touch-action: none;
   }
 
   .problems-shell {
@@ -1238,12 +1241,17 @@
     left: -280px;
     width: 270px;
     height: 100vh;
+    height: 100dvh; /* dynamic viewport height — avoids browser chrome overlap on mobile */
     z-index: 1000;
     border-radius: 0 1.5rem 1.5rem 0 !important;
     box-shadow: 4px 0 24px rgba(0, 0, 0, 0.5);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     transform: translateX(0);
     overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch; /* enables momentum scroll on iOS */
+    overscroll-behavior: contain;      /* stops body from scrolling when sidebar reaches top/bottom */
+    touch-action: pan-y;               /* allow vertical touch scroll inside sidebar */
     /* Solid opaque background — no blur needed on a fixed drawer */
     background: #0a1020 !important;
     backdrop-filter: none !important;
@@ -1258,6 +1266,11 @@
 
   .problems-sidebar.is-open {
     transform: translateX(280px);
+  }
+
+  /* Extra bottom padding so last nav items aren't cut off by browser chrome */
+  .problems-sidebar .problems-sidebar-nav {
+    padding-bottom: 2rem;
   }
 
   /* Ensure full contrast for all sidebar text inside the mobile drawer */
