@@ -642,13 +642,13 @@ export default function ProblemsPage() {
       const month = String(day.getMonth() + 1).padStart(2, "0");
       const date = String(day.getDate()).padStart(2, "0");
       const key = `${year}-${month}-${date}`;
-      const dayData = snapshot.state.activity[key];
+      const dayData = snapshot?.state?.activity?.[key];
       if (dayData && dayData.solved) {
         count += dayData.solved;
       }
     }
     return count;
-  }, [snapshot.state.activity]);
+  }, [snapshot?.state?.activity]);
 
   // Rotating quick reference formula cheat-sheet card
   const cheatSheetFormula = React.useMemo(() => {
@@ -693,7 +693,7 @@ export default function ProblemsPage() {
 
     const matches = problemsCatalog.filter((problem) => {
       const problemStatus =
-        snapshot.state.problems[problem.id]?.status || "not_started";
+        snapshot?.state?.problems?.[problem.id]?.status || "not_started";
       const matchesSearch =
         !normalizedSearch ||
         problem.title.toLowerCase().includes(normalizedSearch) ||
@@ -730,13 +730,13 @@ export default function ProblemsPage() {
       );
     });
 
-    return sortProblems(matches, sortBy, snapshot.state.problems);
+    return sortProblems(matches, sortBy, snapshot?.state?.problems || {});
   }, [
     activeGroup,
     deferredSearch,
     difficulty,
     sortBy,
-    snapshot.state.problems,
+    snapshot?.state?.problems,
     statusFilter,
     topicFilter,
   ]);
@@ -767,7 +767,7 @@ export default function ProblemsPage() {
   const topTopicProgress = coreTopics
     .map((topic) => ({
       topic,
-      progress: snapshot.state.topics[topic.id],
+      progress: snapshot?.state?.topics?.[topic.id],
     }))
     .sort(
       (left, right) =>
@@ -1293,19 +1293,19 @@ export default function ProblemsPage() {
 
             <div className="stats-grid">
               <div>
-                <strong>{snapshot.summary.solvedProblems}</strong>
+                <strong>{snapshot?.summary?.solvedProblems ?? 0}</strong>
                 <span>Solved</span>
               </div>
               <div>
-                <strong>{snapshot.summary.attemptedProblems}</strong>
+                <strong>{snapshot?.summary?.attemptedProblems ?? 0}</strong>
                 <span>Attempted</span>
               </div>
               <div>
-                <strong>{snapshot.summary.completedTopics}</strong>
+                <strong>{snapshot?.summary?.completedTopics ?? 0}</strong>
                 <span>Topics complete</span>
               </div>
               <div>
-                <strong>{snapshot.summary.streaks.longest}</strong>
+                <strong>{snapshot?.summary?.streaks?.longest ?? 0}</strong>
                 <span>Best streak</span>
               </div>
             </div>
@@ -1321,7 +1321,7 @@ export default function ProblemsPage() {
             problem={selectedProblem}
             status={
               selectedProblem
-                ? snapshot.state.problems[selectedProblem.id]
+                ? snapshot?.state?.problems?.[selectedProblem.id]
                 : null
             }
             onAttempt={handleRecordAttempt}
@@ -1367,7 +1367,7 @@ export default function ProblemsPage() {
             </div>
 
             <div className="recent-activity-list">
-              {snapshot.recentEvents.length ? (
+               {(snapshot?.recentEvents || []).length ? (
                 snapshot.recentEvents.slice(0, 5).map((event) => {
                   const topic = event.topicId
                     ? topicLookup[event.topicId]

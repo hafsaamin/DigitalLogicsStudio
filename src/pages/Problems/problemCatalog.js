@@ -263,6 +263,7 @@ const enrichProblem = (problem) => {
 
   return {
     ...problem,
+    isSynthetic: problem.id >= 2000,
     slug: slugify(problem.title),
     numericId: problem.id,
     listId: String(problem.id).padStart(4, "0"),
