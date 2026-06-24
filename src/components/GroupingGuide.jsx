@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSpeechSynthesis } from '../hooks/useSpeechSynthesis';
 import { WhiteboardAnimation } from './WhiteboardAnimation';
 
@@ -8,8 +8,15 @@ export const GroupingGuide = ({ groups, variables, numVariables, grid, getColumn
     const [showWhiteboard, setShowWhiteboard] = useState(true);
     const { speak, cancel, isSpeaking } = useSpeechSynthesis();
 
+    const isPlayingRef = useRef(false);
+    const timeoutRef = useRef(null);
+
     useEffect(() => {
-        return () => cancel();
+        return () => {
+            cancel();
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        };
     }, [cancel]);
 
     const explanations = generateExplanations(groups, variables, numVariables, grid, optimizationType);
@@ -18,14 +25,26 @@ export const GroupingGuide = ({ groups, variables, numVariables, grid, getColumn
         if (isSpeaking) {
             cancel();
         }
+
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+        }
+
         setCurrentStep(index);
         setIsPlaying(true);
+        isPlayingRef.current = true;
         speak(explanations[index].text, () => {
-            setIsPlaying(false);
+            if (!isPlayingRef.current) return;
+
             if (index < explanations.length - 1) {
                 setTimeout(() => {
-                    handlePlayExplanation(index + 1);
+                    if (isPlayingRef.current) {
+                        handlePlayExplanation(index + 1);
+                    }
                 }, 1500);
+            } else {
+                setIsPlaying(false);
+                isPlayingRef.current = false;
             }
         });
     };
@@ -35,8 +54,13 @@ export const GroupingGuide = ({ groups, variables, numVariables, grid, getColumn
     };
 
     const handleStop = () => {
-        cancel();
+        isPlayingRef.current = false;
         setIsPlaying(false);
+        cancel();
+        
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+        }
     };
 
     return (
