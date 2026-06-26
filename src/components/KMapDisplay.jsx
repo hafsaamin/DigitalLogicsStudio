@@ -6,13 +6,10 @@ export const KMapDisplay = ({
     variables,
     getColumnLabels,
     getRowLabels,
-    showGroupingGuide,
     optimizationType = 'SOP'
 }) => {
-    // const getCellKey = (rowIdx, colIdx) => `${rowIdx}-${colIdx}`;
 
     const getCellGroups = (rowIdx, colIdx) => {
-        if (!showGroupingGuide) return [];
         return groups.filter(group =>
             group.cells.some(cell => cell.row === rowIdx && cell.col === colIdx)
         );
@@ -105,7 +102,7 @@ export const KMapDisplay = ({
                     </div>
                 </div>
 
-                {showGroupingGuide && groups.length > 0 && (
+                {groups.length > 0 && (
                     <div className="kmap-groups-legend">
                         <h3 className="kmap-groups-legend-title">
                             Detected Groups ({optimizationType === 'POS' ? 'Maxterms' : 'Minterms'})

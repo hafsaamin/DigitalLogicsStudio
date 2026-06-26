@@ -106,17 +106,17 @@ export const GroupingGuide = ({ groups, variables, numVariables, grid, getColumn
                     disabled={!isRestartActive}
                     title="Restart from beginning"
                 >
-                    ⏪ Restart
+                    ⏪ 
                 </button>
 
-                {/* 2. Step Backward (Adapting 10s back) */}
+                {/* 2. Step Backward */}
                 <button
                     className="kmap-btn kmap-btn-outline"
                     onClick={() => handleStepChange(currentStep - 1)}
                     disabled={!isBackActive}
                     title="Previous Step"
                 >
-                    ⏮️ Back
+                    ⏮️ 
                 </button>
 
                 {/* 3. Play / Pause / Resume */}
@@ -128,23 +128,23 @@ export const GroupingGuide = ({ groups, variables, numVariables, grid, getColumn
                     {isPlaying ? '⏸️ Pause' : (isPaused ? '▶️ Resume' : '▶️ Play')}
                 </button>
 
-                {/* 4. Step Forward (Adapting 5s forward) */}
+                {/* 4. Step Forward  */}
                 <button
                     className="kmap-btn kmap-btn-outline"
                     onClick={() => handleStepChange(currentStep + 1)}
                     disabled={!isForwardActive}
                     title="Next Step"
                 >
-                    ⏭️ Forward
+                    ⏭️ 
                 </button>
 
                 {/* 5. Whiteboard Toggle */}
                 <button
                     className="kmap-btn kmap-btn-secondary"
                     onClick={() => setShowWhiteboard(!showWhiteboard)}
-                    style={{ marginLeft: 'auto' }} // Pushes to the right side if container is flex
+                    style={{ marginLeft: 'auto' }} 
                 >
-                    {showWhiteboard ? '📋 Hide Whiteboard' : '🎨 Show Whiteboard'}
+                    📋 Whiteboard
                 </button>
             </div>
 
