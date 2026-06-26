@@ -81,7 +81,7 @@ const Boolforge = ({
   const [selectedGateIds, setSelectedGateIds] = useState([]);
   const [dragging, setDragging] = useState(false);
   const [connectingFrom, setConnectingFrom] = useState(null);
-  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 }); // eslint-disable-line no-unused-vars
   const [gateIdCounter, setGateIdCounter] = useState(0);
   const [wireIdCounter, setWireIdCounter] = useState(0);
   const [inputCounter, setInputCounter] = useState(0);
@@ -597,6 +597,7 @@ const Boolforge = ({
     const pastedIds = pastedGates.map((g) => g.id);
     setSelectedGateIds(pastedIds);
     saveToHistory();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gates, wires, gateIdCounter, wireIdCounter, inputCounter, outputCounter, saveToHistory]);
 
   const duplicateSelectedGates = useCallback(() => {
@@ -650,6 +651,7 @@ const Boolforge = ({
     const duplicatedIds = duplicatedGates.map((g) => g.id);
     setSelectedGateIds(duplicatedIds);
     saveToHistory();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedGateIds, gates, wires, gateIdCounter, wireIdCounter, inputCounter, outputCounter, saveToHistory]);
 
   // ── Keyboard shortcuts ─────────────────────────────────────────────────────
@@ -871,7 +873,7 @@ const Boolforge = ({
         }),
       );
     }
-  }, [panStart, dragOffset, zoom, panOffset, snapToGrid, selectedGateIds, dragStartMouse, dragStartPositions]);
+  }, [panStart, zoom, panOffset, snapToGrid, selectedGateIds, dragStartMouse, dragStartPositions]);
 
   const handleTouchEnd = useCallback(() => {
     const state = touchStateRef.current;

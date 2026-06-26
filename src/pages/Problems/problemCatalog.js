@@ -159,10 +159,26 @@ const inferTopic = (problem) => {
   const tagText = (problem.tags || []).join(" ").toLowerCase();
   const titleText = problem.title.toLowerCase();
 
+  // K-Map must be checked before general Boolean Algebra
+  if (
+    tagText.includes("k-map") ||
+    tagText.includes("karnaugh") ||
+    titleText.includes("k-map") ||
+    titleText.includes("karnaugh")
+  ) {
+    return {
+      topic: "K-Map & Boolean Simplification",
+      primaryTopicId: "boolean-algebra",
+      filterGroup: "K-Map",
+    };
+  }
+
   if (
     tagText.includes("boolean algebra") ||
     tagText.includes("minterm") ||
-    tagText.includes("identit")
+    tagText.includes("identit") ||
+    tagText.includes("sop") ||
+    tagText.includes("pos")
   ) {
     return {
       topic: "Boolean Algebra",
@@ -263,7 +279,7 @@ const enrichProblem = (problem) => {
 
   return {
     ...problem,
-    isSynthetic: problem.id >= 2000,
+    isSynthetic: problem.isSynthetic === true || problem.id >= 2000,
     slug: slugify(problem.title),
     numericId: problem.id,
     listId: String(problem.id).padStart(4, "0"),
@@ -293,6 +309,7 @@ export const problemFilterGroups = [
   "All Topics",
   "Digital Logic",
   "Boolean Algebra",
+  "K-Map",
   "Number Systems",
   "Arithmetic Functions",
   "Combinational Circuits",
@@ -311,10 +328,10 @@ export const problemBannerCards = [
   },
   {
     title: "K-Map Simplification",
-    description: "Optimize Boolean functions using Karnaugh maps",
-    eyebrow: "K-Map Studio",
+    description: "Minimize Boolean functions with Karnaugh maps — SOP, POS, don't-cares",
+    eyebrow: "K-Map Arena",
     gradient: "linear-gradient(135deg, #2563eb, #60a5fa)",
-    filterGroup: "Boolean Algebra",
+    filterGroup: "K-Map",
   },
   {
     title: "Algebraic Identities",
@@ -332,7 +349,7 @@ export const problemBannerCards = [
   },
   {
     title: "Binary Representations",
-    description: "Explore signed numbers, 2's complement conversions, and operations",
+    description: "Explore signed numbers, BCD, hex, 2's complement conversions",
     eyebrow: "Number Systems",
     gradient: "linear-gradient(135deg, #334155, #64748b)",
     filterGroup: "Number Systems",
