@@ -9,7 +9,6 @@ import Boolforge from './Boolforge';
 import RelatedSeoLinks from '../components/seo/RelatedSeoLinks';
 import { trackToolInteraction } from '../utils/analytics';
 import { Navbar } from './Home/Navbar';
-import Footer from './Home/Footer';
 import { useTheme } from '../context/ThemeContext';
 
 const KMapGenerator = () => {
@@ -72,15 +71,6 @@ const KMapGenerator = () => {
         <Navbar toggleTheme={toggleTheme} theme={theme} />
 
         <main className="kmap-page-main">
-            {/* Page-level header stays centered above the workspace */}
-            {/* <div className="kmap-header-gradient">
-                <h1 className="kmap-main-title">
-                    Karnaugh Map Generator
-                </h1>
-                <p className="kmap-subtitle">
-                    Simplify Boolean expressions with interactive K-Maps
-                </p>
-            </div> */}
 
             <div className="kmap-workspace">
             {/* LEFT SIDEBAR — sticky control panel */}
@@ -287,8 +277,6 @@ const KMapGenerator = () => {
             `}</style>
             <RelatedSeoLinks />
         </main>
-
-        <Footer />
         </div>
     );
 };

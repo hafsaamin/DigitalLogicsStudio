@@ -4938,25 +4938,27 @@ select:focus-visible {
 /* Workspace row — the two-pane shell */
 .kmap-workspace {
   display: flex;
-  align-items: flex-start;        /* CRITICAL: allows sticky to work */
-  gap: 0;
-  min-height: calc(100vh - 180px); /* fills below the header */
-  padding: 0 24px 48px;
-  max-width: 1600px;
-  margin: 0 auto;
+  flex: 1;
+  overflow: hidden;
+  padding: 0 0 48px 24px;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: flex-start;
 }
 
 /* ── LEFT SIDEBAR ───────────────────────────────────────────── */
 .kmap-sidebar {
   width: 380px;
   flex-shrink: 0;
-  position: sticky;
-  top: 72px;                      /* clears the Navbar height */
-  max-height: calc(100vh - 90px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 100%;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: rgba(96,165,250,0.3) transparent;
-  padding-right: 4px;             /* breathing room for scrollbar */
+  padding-right: 4px;
+  box-sizing: border-box;
 }
 
 .kmap-sidebar::-webkit-scrollbar { width: 4px; }
@@ -4987,16 +4989,25 @@ select:focus-visible {
 .kmap-canvas {
   padding-top: 24px;
   flex: 1;
-  min-width: 0;                   
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
   padding-left: 24px;
+  padding-right: 24px;
   border-left: 1px solid rgba(96,165,250,0.1);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(96,165,250,0.3) transparent;
+  height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 /* Stack of result cards */
 .kmap-results-stack {
   display: flex;
   flex-direction: column;
-  gap: 0;                         /* .kmap-card already has margin-bottom */
+  gap: 0;                         
 }
 
 /* ── EMPTY STATE ────────────────────────────────────────────── */
@@ -5038,24 +5049,34 @@ select:focus-visible {
   color: var(--accent-primary);
 }
 
+.kmap-sidebar,
+.kmap-canvas {
+  align-self: stretch;
+}
+
 /* ── RESPONSIVE COLLAPSE ────────────────────────────────────── */
 
 /* Tablets: shrink sidebar */
 @media (max-width: 1024px) {
   .kmap-workspace {
-    padding: 0 16px 40px;
+    padding: 0 0 40px 16px;
   }
   .kmap-sidebar {
     width: 300px;
+  }
+  .kmap-canvas {
+    padding-right: 16px;
   }
 }
 
 /* Mobile: stack vertically, sidebar becomes top bar */
 @media (max-width: 768px) {
-  .kmap-workspace {
+.kmap-workspace {
     flex-direction: column;
     gap: 0;
     padding: 0 14px 32px;
+    overflow-y: visible;
+    height: auto;
   }
 
   .kmap-sidebar {
@@ -5081,16 +5102,17 @@ select:focus-visible {
 .kmap-page {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
   background: var(--bg-color, var(--bg-dark));
   position: relative;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .kmap-page-main {
   flex: 1;
-  position: relative;
-  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 /* Footer baseline — same fix used in ProfileDashboard and Boolforge */
@@ -5173,6 +5195,7 @@ select:focus-visible {
   letter-spacing: 2px;
   margin-bottom: 40px;
 } */
+
 /* Card Styles */
 .kmap-card {
   background: linear-gradient(
